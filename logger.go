@@ -30,6 +30,8 @@ type Logger interface {
 	Warnf(format string, args ...interface{})
 	Error(msg string, err error)
 	Errorf(format string, args ...interface{})
+	Fatal(msg string, err error)
+	Fatalf(format string, args ...interface{})
 }
 
 // Levels
