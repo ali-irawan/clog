@@ -1,6 +1,9 @@
 package clog
 
-import "runtime"
+import (
+	"runtime"
+	"sync"
+)
 
 /// Logger contract defines methods that must be available for a Logger.
 ///
@@ -54,9 +57,12 @@ const (
 
 /// log is a singleton logger instance
 var log Logger
+var logMutex sync.RWMutex
 
 /// Get retrieve singleton logger instance
 func Get() Logger {
+	logMutex.Lock()
+	defer logMutex.Unlock()
 	if log == nil {
 		panic("nbs-go/clog: no logger implementation has been registered")
 	}
