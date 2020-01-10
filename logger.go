@@ -1,6 +1,8 @@
 package clog
 
 import (
+	stdLog "log"
+	"os"
 	"runtime"
 	"sync"
 )
@@ -64,7 +66,9 @@ func Get() Logger {
 	logMutex.Lock()
 	defer logMutex.Unlock()
 	if log == nil {
-		panic("nbs-go/clog: no logger implementation has been registered")
+		// Set new Standard Logger
+		log = NewStdLogger(LevelError, os.Stderr, "", stdLog.LstdFlags)
+		log.Debug("No logger found. Initiating StdLogger")
 	}
 	return log
 }
